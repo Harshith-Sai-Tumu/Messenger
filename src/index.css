@@ -19,9 +19,7 @@ body{
   width: 100vw;
   height: 100vh;
   padding:30px 10px;
-  background-color: rgba(34, 34,34, 0.8);
-  /* background-color: rgba(17,25,40,0.75); */
-  /* backdrop-filter: blur(10px) saturate(200%); */
+  background-color: rgba(34, 40, 49, 0.8);
   border-radius: 12px;
   display: flex;
 }
