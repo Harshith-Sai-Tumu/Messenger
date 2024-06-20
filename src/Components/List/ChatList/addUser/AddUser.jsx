@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { useUserStore } from "../../../../lib/userStore";
 
-const AddUser = () => {
+const AddUser = ({ onAddUser }) => {
   const [user, setUser] = useState(null);
 
   const { currentUser } = useUserStore();
@@ -69,6 +69,9 @@ const AddUser = () => {
           updatedAt: Date.now(),
         }),
       });
+
+      
+      onAddUser();
     } catch (err) {
       console.log(err);
     }
