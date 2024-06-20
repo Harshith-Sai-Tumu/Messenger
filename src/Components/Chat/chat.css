@@ -84,12 +84,21 @@
         }
       }
 
+      &.image-only .texts p {
+        display: none;
+        height: 0;
+        width: 0;
+        margin: 0;
+        padding: 0;
+      }
+
       img {
         width: 30px;
         height: 30px;
         border-radius: 50%;
         object-fit: cover;
       }
+
       .texts {
         flex: 1;
         display: flex;
