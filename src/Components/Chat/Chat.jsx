@@ -23,6 +23,7 @@ const Chat = () => {
     url: "",
     name: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
@@ -61,6 +62,8 @@ const Chat = () => {
 
   const handleSend = async () => {
     if (text.trim() === "" && !img.file) return;
+
+    setLoading(true);
 
     let imgUrl = null;
 
@@ -121,6 +124,7 @@ const Chat = () => {
       });
 
       setText("");
+      setLoading(false);
     }
   };
 
@@ -205,9 +209,9 @@ const Chat = () => {
         <button
           className="sendButton"
           onClick={handleSend}
-          disabled={isCurrentUserBlocked || isReceiverBlocked}
+          disabled={isCurrentUserBlocked || isReceiverBlocked || loading}
         >
-          Send
+          {loading ? "Sending..." : "Send"}
         </button>
       </div>
     </div>
