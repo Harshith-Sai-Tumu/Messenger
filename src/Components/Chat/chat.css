@@ -1,5 +1,6 @@
 .chat {
-  flex: 2;
+  flex: 3;
+  width: 100%;
   border-left: 1px solid #dddddd35;
   border-right: 1px solid #dddddd35;
   height: 100%;
@@ -181,7 +182,9 @@
     .picker {
       position: absolute;
       bottom: 50px;
-      left: 0;
+      left: -80px;
+      transform: translateX(-50%);
+      margin-left: 50%;
     }
   }
 
