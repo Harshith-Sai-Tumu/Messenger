@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./chat.css";
 import EmojiPicker from "emoji-picker-react";
 import {
+  arrayRemove,
   arrayUnion,
   doc,
   getDoc,
@@ -26,7 +27,7 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
 
   const { currentUser } = useUserStore();
-  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore();
 
   const endRef = useRef(null);
 
@@ -128,6 +129,21 @@ const Chat = () => {
     }
   };
 
+  const handleBlock = async () => {
+    if (!user) return;
+
+    const userDocRef = doc(db, "users", currentUser.id);
+
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+      });
+      changeBlock();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="chat">
       <div className="top">
@@ -136,11 +152,16 @@ const Chat = () => {
           <div className="texts">
             <span>{user?.username}</span>
           </div>
+          
         </div>
         <div className="icons">
-          <img src="./phone.png" alt="" />
-          <img src="./video.png" alt="" />
-          <img src="./info.png" alt="" />
+          <button className="blockButton" onClick={handleBlock}>
+            {isCurrentUserBlocked
+              ? "You are Blocked!"
+              : isReceiverBlocked
+              ? "UnBlock user"
+              : "Block User"}
+          </button>
         </div>
       </div>
       <div className="center">

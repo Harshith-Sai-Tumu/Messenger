@@ -8,6 +8,7 @@ import {
 import { auth, db } from "../../lib/firebase";
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import upload from "../../lib/upload";
+import { useUserStore } from "../../lib/userStore"; 
 
 const Login = () => {
   const [avatar, setAvatar] = useState({
@@ -16,6 +17,7 @@ const Login = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const { fetchUserInfo } = useUserStore(); 
 
   const handleAvatar = (e) => {
     if (e.target.files[0]) {
@@ -69,7 +71,8 @@ const Login = () => {
         chats: [],
       });
 
-      toast.success("Account created! You can login now!");
+      
+      fetchUserInfo(res.user.uid);
     } catch (err) {
       console.log(err);
       toast.error(err.message);
